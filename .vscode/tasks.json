@@ -1,0 +1,46 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "clean (functions)",
+			"command": "mvn",
+			"args": [
+				"clean"
+			],
+			"type": "shell",
+			"problemMatcher": [],
+			"options": {
+				"cwd": "${workspaceFolder}/src"
+			}
+		},
+		{
+			"label": "package (functions)",
+			"command": "mvn",
+			"args": [
+				"clean",
+				"package",
+				"-DskipTests"
+			],
+			"type": "shell",
+			"dependsOn": "clean (functions)",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"options": {
+				"cwd": "${workspaceFolder}/src"
+			}
+		},
+		{
+			"type": "func",
+			"dependsOn": "package (functions)",
+			"options": {
+				"cwd": "${workspaceFolder}/src/target/azure-functions/functions-quickstart-java-azd-timer"
+			},
+			"command": "host start",
+			"isBackground": true,
+			"problemMatcher": "$func-java-watch"
+		}
+	]
+}

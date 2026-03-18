@@ -1,0 +1,16 @@
+# Maven build output
+target/
+
+# IDE files
+*.iml
+.idea/
+*.swp
+*.swo
+
+# Local settings (contains connection strings)
+local.settings.json
+
+# Azure Functions
+bin/
+obj/
+.azure/
