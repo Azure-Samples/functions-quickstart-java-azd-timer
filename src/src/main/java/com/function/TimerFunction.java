@@ -16,6 +16,10 @@ public class TimerFunction {
      * <p>The schedule parameter uses the %TIMER_SCHEDULE% syntax to read the NCRONTAB expression
      * from the TIMER_SCHEDULE application setting, making it configurable without code changes.</p>
      *
+     * <p>Note: Unlike the .NET version, the Java Azure Functions library does not support
+     * the RunOnStartup parameter on the TimerTrigger annotation. The function will only
+     * execute on the defined cron schedule.</p>
+     *
      * @param timerInfo JSON string containing timer schedule status information
      * @param context   Function execution context providing logging capabilities
      */

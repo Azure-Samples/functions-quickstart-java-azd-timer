@@ -172,6 +172,8 @@ The Java library uses the [@TimerTrigger](https://learn.microsoft.com/java/api/c
 
 2. **Past Due Detection**: The function checks if the timer is past due by inspecting the `timerInfo` JSON string, allowing for appropriate handling of delayed executions.
 
+3. **No RunOnStartup**: Unlike .NET, the Java Azure Functions library does not support `RunOnStartup` on the `@TimerTrigger` annotation. The function executes only on the defined cron schedule.
+
 3. **Annotation-Driven**: Java Azure Functions use annotations (`@FunctionName`, `@TimerTrigger`) to define triggers, eliminating the need for boilerplate configuration.
 
 4. **Lightweight**: No dependency injection framework required — the function receives an `ExecutionContext` for logging directly from the runtime.
