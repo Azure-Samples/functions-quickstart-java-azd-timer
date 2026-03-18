@@ -45,3 +45,4 @@ local.settings.json
 
 # Build
 obj/
+.squad/
