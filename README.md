@@ -34,6 +34,7 @@ This codespace is already configured with the required tools to complete this tu
 
 ## Prerequisites
 
+- [Docker](https://www.docker.com/products/docker-desktop/) - Required to run the [Azurite](https://learn.microsoft.com/azure/storage/common/storage-use-azurite) storage emulator container for local development
 - [Azure Storage Emulator (Azurite)](https://learn.microsoft.com/azure/storage/common/storage-use-azurite) - Required for local development with Azure Functions
 - [Java Development Kit (JDK) 17](https://learn.microsoft.com/java/openjdk/download#openjdk-17)
 - [Apache Maven 3.8+](https://maven.apache.org/download.cgi)
@@ -99,8 +100,11 @@ The `TIMER_SCHEDULE` setting defines when your timer function runs using NCRONTA
 3. From the `src` folder, run this command to start the Functions host locally:
 
     ```shell
-    func start
+    mvn azure-functions:run
     ```
+
+    > [!NOTE]
+    > For Java functions, use `mvn azure-functions:run` rather than `func start` directly. The Maven goal points the Functions host at the staged output in `target/azure-functions/functions-quickstart-java-azd-timer/` where the compiled function metadata lives. Running `func start` from `src/` would produce `No job functions found` because the host wouldn't see the built artifacts.
 
 4. Wait for the timer schedule to execute the timer trigger.
 
