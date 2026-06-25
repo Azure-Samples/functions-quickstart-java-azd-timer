@@ -97,14 +97,15 @@ The `TIMER_SCHEDULE` setting defines when your timer function runs using NCRONTA
     mvn clean package
     ```
 
-3. From the `src` folder, run this command to start the Functions host locally:
+3. Change into the staged output folder and start the Functions host with Core Tools:
 
     ```shell
-    mvn azure-functions:run
+    cd target/azure-functions/functions-quickstart-java-azd-timer
+    func start
     ```
 
     > [!NOTE]
-    > For Java functions, use `mvn azure-functions:run` rather than `func start` directly. The Maven goal points the Functions host at the staged output in `target/azure-functions/functions-quickstart-java-azd-timer/` where the compiled function metadata lives. Running `func start` from `src/` would produce `No job functions found` because the host wouldn't see the built artifacts.
+    > For Java functions, `func start` must be run from `target/azure-functions/<appName>/` where `mvn package` stages the compiled `function.json` metadata. Running `func start` directly from `src/` produces `No job functions found` because the host wouldn't see the built artifacts. If you prefer a single Maven command, you can use `mvn azure-functions:run` instead, which does the same staging step under the hood.
 
 4. Wait for the timer schedule to execute the timer trigger.
 
