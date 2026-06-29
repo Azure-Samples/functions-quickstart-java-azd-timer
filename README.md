@@ -34,7 +34,7 @@ This codespace is already configured with the required tools to complete this tu
 
 ## Prerequisites
 
-- [Azure Storage Emulator (Azurite)](https://learn.microsoft.com/azure/storage/common/storage-use-azurite) - Required for local development with Azure Functions
+- [Azure Storage Emulator (Azurite)](https://learn.microsoft.com/azure/storage/common/storage-use-azurite) - Required for local development with Azure Functions. Install via the VS Code [Azurite extension](https://marketplace.visualstudio.com/items?itemName=Azurite.azurite), `npm install -g azurite`, or run the [Docker image](https://hub.docker.com/_/microsoft-azure-storage-azurite)
 - [Java Development Kit (JDK) 17](https://learn.microsoft.com/java/openjdk/download#openjdk-17)
 - [Apache Maven 3.8+](https://maven.apache.org/download.cgi)
 - [Azure Functions Core Tools](https://learn.microsoft.com/azure/azure-functions/functions-run-local?pivots=programming-language-java#install-the-azure-functions-core-tools)
@@ -84,27 +84,38 @@ The `TIMER_SCHEDULE` setting defines when your timer function runs using NCRONTA
 
 ## Run your app from the terminal
 
-1. Start Azurite storage emulator in a separate terminal window:
+1. Start the Azurite storage emulator in a separate terminal window. Use whichever install option you set up in the prerequisites — for example, the `npm` package:
+
+   ```shell
+   azurite
+   ```
+
+   Or, if you installed Docker, run the Azurite container:
 
    ```shell
    docker run -p 10000:10000 -p 10001:10001 -p 10002:10002 mcr.microsoft.com/azure-storage/azurite
    ```
 
-2. From the `src` folder, build the project:
+2. From the `src` folder, build the project and start the Functions host locally:
 
     ```shell
     mvn clean package
+    mvn azure-functions:run
     ```
 
-3. From the `src` folder, run this command to start the Functions host locally:
+    This matches the recommended local-run command in the [Azure Functions Java local development docs](https://learn.microsoft.com/azure/azure-functions/functions-run-local?pivots=programming-language-java#start).
 
-    ```shell
-    func start
-    ```
+    > [!NOTE]
+    > Alternatively, you can run with Core Tools directly. Because `mvn package` stages the compiled `function.json` metadata under `target/azure-functions/<appName>/`, `func start` must be run from that folder — running it from `src/` produces `No job functions found` because the host wouldn't see the built artifacts:
+    >
+    > ```shell
+    > cd target/azure-functions/functions-quickstart-java-azd-timer
+    > func start
+    > ```
 
-4. Wait for the timer schedule to execute the timer trigger.
+3. Wait for the timer schedule to execute the timer trigger.
 
-5. When you're done, press Ctrl+C in the terminal window to stop the `func` host process.
+4. When you're done, press Ctrl+C in the terminal window to stop the `func` host process.
 
 ## Run your app using Visual Studio Code
 
