@@ -96,25 +96,26 @@ The `TIMER_SCHEDULE` setting defines when your timer function runs using NCRONTA
    docker run -p 10000:10000 -p 10001:10001 -p 10002:10002 mcr.microsoft.com/azure-storage/azurite
    ```
 
-2. From the `src` folder, build the project:
+2. From the `src` folder, build the project and start the Functions host locally:
 
     ```shell
     mvn clean package
+    mvn azure-functions:run
     ```
 
-3. Change into the staged output folder and start the Functions host with Core Tools:
-
-    ```shell
-    cd target/azure-functions/functions-quickstart-java-azd-timer
-    func start
-    ```
+    This matches the recommended local-run command in the [Azure Functions Java local development docs](https://learn.microsoft.com/azure/azure-functions/functions-run-local?pivots=programming-language-java#start).
 
     > [!NOTE]
-    > For Java functions, `func start` must be run from `target/azure-functions/<appName>/` where `mvn package` stages the compiled `function.json` metadata. Running `func start` directly from `src/` produces `No job functions found` because the host wouldn't see the built artifacts. If you prefer a single Maven command, you can use `mvn azure-functions:run` instead, which does the same staging step under the hood.
+    > Alternatively, you can run with Core Tools directly. Because `mvn package` stages the compiled `function.json` metadata under `target/azure-functions/<appName>/`, `func start` must be run from that folder — running it from `src/` produces `No job functions found` because the host wouldn't see the built artifacts:
+    >
+    > ```shell
+    > cd target/azure-functions/functions-quickstart-java-azd-timer
+    > func start
+    > ```
 
-4. Wait for the timer schedule to execute the timer trigger.
+3. Wait for the timer schedule to execute the timer trigger.
 
-5. When you're done, press Ctrl+C in the terminal window to stop the `func` host process.
+4. When you're done, press Ctrl+C in the terminal window to stop the `func` host process.
 
 ## Run your app using Visual Studio Code
 
